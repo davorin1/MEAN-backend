@@ -15,6 +15,8 @@ app.use(function(req,res,next){
     next();
 });
 
+app.get('/api/message', GetMessages);
+
 app.post('/api/message', function(req,res) {
     console.log(req.body);
 
@@ -25,16 +27,15 @@ app.post('/api/message', function(req,res) {
     res.status(200);
 });
 
-function GetMessages() {
+function GetMessages(req, res) {
     Message.find({}).exec(function(err, result){
-        console.log(result);
+        res.send(result);
     })
 }
 
 mongoose.connect("mongodb://localhost:27017/test", function(err) {
     if(!err){
         console.log("we are connected to mongo");
-        GetMessages();
     }
 });
 
